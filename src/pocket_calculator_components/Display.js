@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 class Display extends React.Component {
 
   render() {
-    return (<div className="display">Hi, I'm the Display!</div>);
+    return (
+      <div className="display">{this.props.expression}</div>
+    );
   }
 
 }
