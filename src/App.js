@@ -5,6 +5,15 @@ import './App.css';
 
 class App extends Component {
   render() {
+
+    const buttonmatrix = [
+      ["AC" , "DEL" , "(" , ")"],
+      ["1"  , "2"   , "3" , "+"],
+      ["4"  , "5"   , "6" , "-"],
+      ["7"  , "8"   , "9" , "*"],
+      ["0"  , "."   , "=" , "/"],
+    ];
+
     return (
       <div className="App">
         <header className="App-header">
@@ -14,7 +23,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <PocketCalculator />
+        <PocketCalculator buttonmatrix = {buttonmatrix}/>
       </div>
     );
   }

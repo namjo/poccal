@@ -27,9 +27,19 @@
   to { transform: rotate(360deg); }
 }
 
-.btn {
-  border: 1px solid #aaa;
+.row {
+  display: flex;
+}
+
+.btn, .display {
+  border: 1px solid #000;
   background-color: #aaf;
-  width: 20px;
-  height: 20px;
+  margin: 10px;
+  padding: 10px;
+  min-width: 50px;
+  min-height: 50px;
+}
+
+.display {
+  width: 500px;
 }
