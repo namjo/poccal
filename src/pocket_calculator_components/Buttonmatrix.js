@@ -1,15 +1,28 @@
 import React from 'react';
+import Button from './Button.js';
 
 class Buttonmatrix extends React.Component {
+
+  renderButton(buttonlabel, onClick) {
+    // define callback depending on buttonlabel if AC, DEL, =, ...
+    return (
+      <Button
+        label={buttonlabel}
+        onClick={onClick}
+      />
+    );
+  }
 
   render() {
 
     const btn_matrix = this.props.buttonmatrix.map((buttonrow, row) => {
-      const btn_row = buttonrow.map((button, col) => {
+      const btn_row = buttonrow.map((buttonlabel, col) => {
         return (
-          <div key={row+"-"+col} className="btn">
-            {button}
-          </div>
+          // {this.renderButton(buttonlabel, this.props.onClick)}
+          <Button
+            label={buttonlabel}
+            onClick={this.props.onClick}
+          />
         );
       });
       return (
@@ -20,7 +33,7 @@ class Buttonmatrix extends React.Component {
     });
 
     return (
-      <div onClick={this.props.onClick}>
+      <div>
         {btn_matrix}
       </div>
     );
