@@ -38,6 +38,9 @@
   padding: 10px;
   min-width: 50px;
   min-height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 50px;
 }
 
 .display {

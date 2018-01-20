@@ -8,7 +8,7 @@ class Buttonmatrix extends React.Component {
       const btn_row = buttonrow.map((button, col) => {
         return (
           <div key={row+"-"+col} className="btn">
-            <p className="btn-text">{button}</p>
+            {button}
           </div>
         );
       });

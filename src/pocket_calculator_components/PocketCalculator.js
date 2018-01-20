@@ -7,14 +7,19 @@ class PocketCalculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expression: null,
+      expression: "",
     }
+    this.bigEventHandler = this.bigEventHandler.bind(this);
   }
 
-  bigEventHandler() {
-    const buttonmatrix = this.props.buttonmatrix;
+  bigEventHandler(ev) {
+    ev.stopPropagation();
+    const text = ev.target.className != "row" ? ev.target.innerText : "";
+    // keep in mind we want history, hence create copy!
+    let expression = this.state.expression + text;
+
     this.setState({
-      expression: "hi",
+      expression: expression,
     });
   }
 
@@ -24,7 +29,7 @@ class PocketCalculator extends React.Component {
       <div>
         <Display expression={this.state.expression}/>
         <Buttonmatrix
-          onClick={() => this.bigEventHandler() /* Wrap anonymous function around handler to bind this. Otherwise: this.bigEventHandler.bind(this) */}
+          onClick={this.bigEventHandler}
           buttonmatrix={this.props.buttonmatrix}
         />
       </div>
