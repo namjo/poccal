@@ -13,16 +13,16 @@ class Buttonmatrix extends React.Component {
     );
   }
 
+
   render() {
 
     const btn_matrix = this.props.buttonmatrix.map((buttonrow, row) => {
       const btn_row = buttonrow.map((buttonlabel, col) => {
         return (
-          // {this.renderButton(buttonlabel, this.props.onClick)}
-          <Button
-            label={buttonlabel}
-            onClick={this.props.onClick}
-          />
+          // There must be a way to remove those unnecessary div tags!
+          <div>
+            {this.renderButton(buttonlabel, this.props.onClick)}
+          </div>
         );
       });
       return (

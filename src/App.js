@@ -24,6 +24,7 @@ class App extends Component {
           Animated logo too cute to delete from codebase.
         </p>
         <PocketCalculator
+          bm={bm}
           buttonmatrix={buttonmatrix}
         />
       </div>
