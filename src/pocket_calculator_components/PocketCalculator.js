@@ -9,14 +9,13 @@ class PocketCalculator extends React.Component {
     this.state = {
       expression: "",
     }
-    this.clickHandler = this.clickHandler.bind(this);
   }
 
-  clickHandler(ev) {
-
-    const text = ev.target.className != "row" ? ev.target.innerText : "";
+  clickHandler = (ev) => {
+    const text = ev.target.innerText;
     // keep in mind we want history, hence create copy!
-    let expression = this.state.expression + text;
+    // make a switch case, but somehow I don t think this is good style ...
+    let expression = text === "AC" || text === "DEL" || text === "=" ? this.state.expression : this.state.expression + text;
 
     this.setState({
       expression: expression,

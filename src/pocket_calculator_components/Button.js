@@ -4,7 +4,7 @@ function Button(props) {
   return (
     <button
       className="btn"
-      onClick={props.onClick} // this is the actual eventListener!
+      onClick={props.onClick} // this is the actual eventListener, many of which will be generated ...
     >
       {props.label}
     </button>
