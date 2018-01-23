@@ -3,25 +3,24 @@ import Button from './Button.js';
 
 class Buttonmatrix extends React.Component {
 
-  renderButton(buttonlabel, onClick) {
+  renderButton(label, handler) {
     // define callback depending on buttonlabel if AC, DEL, =, ...
     return (
       <Button
-        label={buttonlabel}
-        onClick={onClick}
+        label={label}
+        onClick={handler}
       />
     );
   }
 
 
   render() {
-
     const btn_matrix = this.props.buttonmatrix.map((buttonrow, row) => {
-      const btn_row = buttonrow.map((buttonlabel, col) => {
+      const btn_row = buttonrow.map((button, col) => {
         return (
           // There must be a way to remove those unnecessary div tags!
           <div>
-            {this.renderButton(buttonlabel, this.props.onClick)}
+            {this.renderButton(button.label, button.handler)}
           </div>
         );
       });
