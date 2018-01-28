@@ -8,7 +8,6 @@ class PocketCalculator extends React.Component {
     super(props);
     this.state = {
       expression: "",
-      ans: "",
     }
   }
 
@@ -35,11 +34,7 @@ class PocketCalculator extends React.Component {
       // making case distinction here has one aesthetic disadvantage: handler gets passed with case distinction all way down onto Button component. However, by then it should actually already be decided which mode to use to get the answer!
       // could first make case distinction and based on case return mode-parametized function. But that in turn comes with disadvantage of repeated code, e.g. having three times let ans; this.setState({...}); ...
       // here is one solution:
-      const ans = this.getAnswer(mode)(); // promisify!
-      this.setState({
-        expression: ans,
-        ans: ans,
-      });
+      this.getAnswer(mode)();
 
     }
   }
@@ -47,15 +42,55 @@ class PocketCalculator extends React.Component {
   getAnswer(mode) {
     if (mode === "GET") {
       return () => {
-        // toDo
+        const expression = this.state.expression;
+        fetch(
+          "http://api.mathjs.org/v1/?expr=" + encodeURIComponent(expression)
+        ).then((res) => {
+          if (res.status !== 200) {
+            alert("something went wrong: Error code " + res.status);
+            return;
+          }
+          return res.text();
+        }).then((data) => {
+          if (data !== "undefined")
+          this.setState({
+            expression: data,
+          });
+        });
       }
     } else if (mode === "POST") {
       return () => {
-        // toDo
+        const expression = this.state.expression;
+        fetch(
+          "http://api.mathjs.org/v1/", {
+            method: "POST",
+            body: JSON.stringify({
+              expr: expression,
+              precision: 10
+            }),
+            headers: new Headers({
+              "Content-Type": "application/json"
+            })
+          }
+        ).then((res) => {
+          if (res.status !== 200) {
+            alert("something went wrong: Error code " + res.status);
+            return;
+          }
+          return res.json();
+        }).then((data) => {
+          if (data.result !== "undefined")
+          this.setState({
+            expression: data.result,
+          });
+        });
       }
     } else if (mode === "js-eval") {
       return () => {
-        // return eval(this.state.expression);
+        const expression = eval(this.state.expression);
+        this.setState({
+          expression: expression,
+        });
       }
     }
   }
@@ -69,7 +104,7 @@ class PocketCalculator extends React.Component {
     }
   }
 
-  // how to code this more intuitive?
+  // how to code this more intuitively?
   buttonmatrix = this.props.buttonmatrix.map((buttonrow, row) => {
     return buttonrow.map((label, col) => {
       let handler;
@@ -85,15 +120,6 @@ class PocketCalculator extends React.Component {
       return {label: label, handler: handler};
     });
   });
-
-  // buttonmatrix = [
-  //   [{label: "AC", handler: this.clearExpression}, {label: "DEL", handler: this.delExpression}, {label: "(", handler: this.updateExpression("(")}, {label: ")", handler: this.updateExpression(")")}],
-  //   [{label: "1", handler: this.updateExpression("1")}, {label: "2", handler: this.updateExpression("2")}, {label: "3", handler: this.updateExpression("3")}, {label: "+", handler: this.updateExpression("+")}],
-  //   [{label: "4", handler: this.updateExpression("4")}, {label: "5", handler: this.updateExpression("5")}, {label: "6", handler: this.updateExpression("6")}, {label: "-", handler: this.updateExpression("-")}],
-  //   [{label: "7", handler: this.updateExpression("7")}, {label: "8", handler: this.updateExpression("8")}, {label: "9", handler: this.updateExpression("9")}, {label: "*", handler: this.updateExpression("*")}],
-  //   [{label: "0", handler: this.updateExpression("0")}, {label: ".", handler: this.updateExpression(".")}, {label: "=", handler: this.evalExpression(this.props.mode)}, {label: "/", handler: this.updateExpression("/")}],
-  // ];
-
 
   render() {
     return (
